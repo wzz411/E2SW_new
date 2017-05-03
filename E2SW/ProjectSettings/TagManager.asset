@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Node Name
+  - Children Node
+  - Edit Panel
+  - Edit Button
+  - Create Button
+  - Node Info and Buy Btn
+  - Buy Node
+  - EstCriteriaA
+  - EstCriteriaB
+  - EstCriteriaC
+  - EstCriteriaD
+  - EstCriteriaE
+  - EstCriteriaF
+  - EstCriteriaG
+  - EstCriteriaH
+  - PopUpCriteria
+  - Criteria1
+  - Criteria2
+  - clueControl
+  - Mini Game
+  - Drill_1
+  - Main Game Scene
+  - Initial Node
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
