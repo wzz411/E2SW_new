@@ -7,9 +7,10 @@ using UnityEngine.UI;
 public class EditModeConfirmButton_Main : MonoBehaviour {
     public InputField funds_input, labor_input, current_input, remaining_input, overallPG_input, numofPN_input, numofTP_input, coef_funds_input, 
         coef_labor_input, coef_testCost_input, coef_criteriaA_input, coef_criteriaB_input, coef_criteriaC_input, coef_criteriaD_input, coef_criteriaE_input,
-        coef_criteriaF_input, coef_criteriaG_input, coef_criteriaH_input,coef_expolore_labor_input;
+        coef_criteriaF_input, coef_criteriaG_input, coef_criteriaH_input,coef_expolore_labor_input, coef_funds_time_input, coef_labor_time_input, coef_test_cost_time_input,
+        coef_criteriaA_time_input, coef_criteriaB_time_input, coef_criteriaC_time_input, coef_criteriaD_time_input, coef_criteriaE_time_input, coef_criteriaF_time_input, coef_criteriaG_time_input,
+        coef_criteriaH_time_input, coef_explore_labor_time_input;
     public Text funds, labor, current, remaining, overallPG, numofPN, numofTP;
-    public Text coef_fund, coef_labor, coef_testCost, coef_A, coef_B, coef_C, coef_D, coef_E, coef_F, coef_G, coef_H, coef_exploreLabor;
     public Button confirmButton;
     // Use this for initialization
     void Start () {
@@ -23,6 +24,7 @@ public class EditModeConfirmButton_Main : MonoBehaviour {
         overallPG = GameObject.Find("overallPGValue").GetComponent<Text>();
         numofPN = GameObject.Find("numofPNValue").GetComponent<Text>();
         numofTP = GameObject.Find("numofTPValue").GetComponent<Text>();
+        /*
         coef_fund = GameObject.Find("coef_fund").GetComponent<Text>();
         coef_labor = GameObject.Find("coef_labor").GetComponent<Text>();
         coef_testCost = GameObject.Find("coef_testCost").GetComponent<Text>();
@@ -35,13 +37,16 @@ public class EditModeConfirmButton_Main : MonoBehaviour {
         coef_G = GameObject.Find("coef_G").GetComponent<Text>();
         coef_H = GameObject.Find("coef_H").GetComponent<Text>();
         coef_exploreLabor = GameObject.Find("coef_exploreLabor").GetComponent<Text>();
+        */
     }
 
     
     // Update is called once per frame
     void Update () {
-		
+        
+        
 	}
+
 
     private void TaskOnClick()
     {
@@ -76,72 +81,111 @@ public class EditModeConfirmButton_Main : MonoBehaviour {
         if(coef_funds_input.text != "")
         {
             GodMode.coef_funds = float.Parse(coef_funds_input.text);
-            coef_fund.text = coef_funds_input.text;
         }
         if (coef_labor_input.text != "")
         {
             GodMode.coef_labor = float.Parse(coef_labor_input.text);
-            coef_labor.text = coef_labor_input.text;
         }
         if (coef_testCost_input.text != "")
         {
             GodMode.coef_testCost = float.Parse(coef_testCost_input.text);
-            coef_testCost.text = coef_testCost_input.text;
         }
         if (coef_criteriaA_input.text != "")
         {
             GodMode.coef_criteriaA = float.Parse(coef_criteriaA_input.text);
-            coef_A.text = coef_criteriaA_input.text;
         }
         if (coef_criteriaB_input.text != "")
         {
             GodMode.coef_criteriaB = float.Parse(coef_criteriaB_input.text);
-            coef_B.text = coef_criteriaB_input.text;
         }
         if (coef_criteriaC_input.text != "")
         {
             GodMode.coef_criteriaC = float.Parse(coef_criteriaC_input.text);
-            coef_C.text = coef_criteriaC_input.text;
         }
         if (coef_criteriaD_input.text != "")
         {
             GodMode.coef_criteriaD = float.Parse(coef_criteriaD_input.text);
-            coef_D.text = coef_criteriaD_input.text;
         }
         if (coef_criteriaE_input.text != "")
         {
             GodMode.coef_criteriaE = float.Parse(coef_criteriaE_input.text);
-            coef_E.text = coef_criteriaE_input.text;
         }
         if (coef_criteriaF_input.text != "")
         {
             GodMode.coef_criteriaF = float.Parse(coef_criteriaF_input.text);
-            coef_F.text = coef_criteriaF_input.text;
         }
         if (coef_criteriaG_input.text != "")
         {
             GodMode.coef_criteriaG = float.Parse(coef_criteriaG_input.text);
-            coef_G.text = coef_criteriaG_input.text;
         }
         if (coef_criteriaH_input.text != "")
         {
             GodMode.coef_criteriaH = float.Parse(coef_criteriaH_input.text);
-            coef_H.text = coef_criteriaH_input.text;
         }
         if (coef_expolore_labor_input.text != "")
         {
             GodMode.coef_explore_labor = float.Parse(coef_expolore_labor_input.text);
-            coef_exploreLabor.text = coef_expolore_labor_input.text;
+        }
+        if (coef_funds_time_input.text != "")
+        {
+            GodMode.coef_funds_time = float.Parse(coef_funds_time_input.text);
+        }
+        if (coef_labor_time_input.text != "")
+        {
+            GodMode.coef_labor_time = float.Parse(coef_labor_time_input.text);
+        }
+        if (coef_test_cost_time_input.text != "")
+        {
+            GodMode.coef_test_cost_time = float.Parse(coef_test_cost_time_input.text);
+        }
+        if (coef_criteriaA_time_input.text != "")
+        {
+            GodMode.coef_criteriaA_time = float.Parse(coef_criteriaA_time_input.text);
+        }
+        if (coef_criteriaB_time_input.text != "")
+        {
+            GodMode.coef_criteriaB_time = float.Parse(coef_criteriaB_time_input.text);
+        }
+        if (coef_criteriaC_time_input.text != "")
+        {
+            GodMode.coef_criteriaC_time = float.Parse(coef_criteriaC_time_input.text);
+        }
+        if (coef_criteriaD_time_input.text != "")
+        {
+            GodMode.coef_criteriaD_time = float.Parse(coef_criteriaD_time_input.text);
+        }
+        if (coef_criteriaE_time_input.text != "")
+        {
+            GodMode.coef_criteriaE_time = float.Parse(coef_criteriaE_time_input.text);
+        }
+        if (coef_criteriaF_time_input.text != "")
+        {
+            GodMode.coef_criteriaF_time = float.Parse(coef_criteriaF_time_input.text);
+        }
+        if (coef_criteriaG_time_input.text != "")
+        {
+            GodMode.coef_criteriaG_time = float.Parse(coef_criteriaG_time_input.text);
+        }
+        if (coef_criteriaH_time_input.text != "")
+        {
+            GodMode.coef_criteriaH_time = float.Parse(coef_criteriaH_time_input.text);
+        }
+        if (coef_explore_labor_time_input.text != "")
+        {
+            GodMode.coef_explore_labor_time = float.Parse(coef_explore_labor_time_input.text);
         }
 
+        
 
-
-        Destroy(transform.parent.gameObject);
+        transform.parent.localScale = new Vector3(0f,0f,0f);
+        //Destroy(transform.parent.gameObject);
         GameObject[] editBtns = GameObject.FindGameObjectsWithTag("Edit Button");
         foreach (GameObject editBtn in editBtns)
         {
             editBtn.GetComponent<Button>().enabled = true;
         }
     }
+
+
 
 }

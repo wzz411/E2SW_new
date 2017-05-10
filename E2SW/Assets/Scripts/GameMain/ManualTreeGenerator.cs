@@ -37,7 +37,20 @@ public class ManualTreeGenerator : MonoBehaviour {
 
     }
 
-    
+    private void Update()
+    {
+        /*
+        if (Input.GetKeyDown("space"))
+        {
+            Debug.Log("dd");
+            for (int i = 0; i < 60; i++)
+            {
+                Debug.Log(lr.GetPosition(i));
+            }
+        }
+        */
+    }
+
 
     // if create button is clicked
     private void TaskOnClick()
@@ -85,6 +98,7 @@ public class ManualTreeGenerator : MonoBehaviour {
                     // moethod 2: use GameObject to store all children node
                     gameObject.transform.parent.GetComponentInChildren<NodeAttributes>().childNode.Add(newNode);
                     count++;
+                    GodMode.all_nodes.Add(newNode);
                 }
 
                 /*
@@ -100,6 +114,8 @@ public class ManualTreeGenerator : MonoBehaviour {
 
             }
         }
+
+
     }
 
 

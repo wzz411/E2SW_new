@@ -16,6 +16,7 @@ public class EditModeConfirmButton : MonoBehaviour {
 
     private void TaskOnClick()
     {
+
         NodeAttributes temp = gameObject.GetComponentInParent<NodeAttributes>();
         if(funds.text != "")
         {

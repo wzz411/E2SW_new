@@ -48,6 +48,10 @@ public class Explore : MonoBehaviour
         labor.text = (float.Parse(labor.text) - laborSpent).ToString();
 
         Debug.Log("this node has " + transform.parent.GetComponent<NodeAttributes>().childNode.Count + " child nodes");
+        for (int i = 0; i < transform.parent.GetComponent<NodeAttributes>().childNode.Count; i++)
+        {
+            Debug.Log("childe " + transform.parent.GetComponent<NodeAttributes>().childNode[i].name + " has " + transform.parent.GetComponent<NodeAttributes>().childNode[i].GetComponentInChildren<NodeAttributes>().childNode.Count + " child nodes");
+        }
 
         /*
         // copy components into new instantiated node GameObject
@@ -91,7 +95,16 @@ public class Explore : MonoBehaviour
                 Vector3 nodeMoveFwd = transform.parent.GetComponent<NodeAttributes>().childNode[nodeIndex[i]].transform.position;
                 nodeMoveFwd.z = 250;
                 transform.parent.GetComponent<NodeAttributes>().childNode[nodeIndex[i]].transform.position = nodeMoveFwd;
-                transform.parent.GetComponent<NodeAttributes>().childNode[nodeIndex[i]].transform.localScale = new Vector3(1f, 1f, 1f);
+                //transform.parent.GetComponent<NodeAttributes>().childNode[nodeIndex[i]].transform.localScale = new Vector3(1f, 1f, 1f);
+                
+                if (transform.parent.GetComponent<NodeAttributes>().childNode[i].GetComponentInChildren<NodeAttributes>().childNode.Count > 2)
+                {
+                    transform.parent.GetComponent<NodeAttributes>().childNode[nodeIndex[i]].transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+                }
+                else
+                {
+                    transform.parent.GetComponent<NodeAttributes>().childNode[nodeIndex[i]].transform.localScale = new Vector3(1f, 1f, 1f);
+                }
 
                 // 2) move LineRenderer
                 lr.startWidth = 5f;
@@ -112,7 +125,16 @@ public class Explore : MonoBehaviour
             Vector3 nodeMoveFwd = transform.parent.GetComponent<NodeAttributes>().childNode[i].transform.position;
             nodeMoveFwd.z = 250;
             transform.parent.GetComponent<NodeAttributes>().childNode[i].transform.position = nodeMoveFwd;
-            transform.parent.GetComponent<NodeAttributes>().childNode[i].transform.localScale = new Vector3(1f, 1f, 1f);
+            //transform.parent.GetComponent<NodeAttributes>().childNode[i].transform.localScale = new Vector3(1f, 1f, 1f);
+
+            if (transform.parent.GetComponent<NodeAttributes>().childNode[i].GetComponentInChildren<NodeAttributes>().childNode.Count > 2)
+            {
+                transform.parent.GetComponent<NodeAttributes>().childNode[i].transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+            }
+            else
+            {
+                transform.parent.GetComponent<NodeAttributes>().childNode[i].transform.localScale = new Vector3(1f, 1f, 1f);
+            }
 
             // 2) move LineRenderer
             lr.startWidth = 5f;

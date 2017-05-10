@@ -23,19 +23,19 @@ public class NodeAttributes : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     
 
 
-    void Start () {
+    void Awake () {
 
-        funds = Random.Range(15, 50) * 10;
-        labor = Random.Range(1, 5);
-        numofturn = Random.Range(1, 3);
-        attrA = Random.Range(0, 9);
-        attrB = Random.Range(0, 9);
-        attrC = Random.Range(0, 9);
-        attrD = Random.Range(0, 9);
-        attrE = Random.Range(0, 9);
-        attrF = Random.Range(0, 9);
-        attrG = Random.Range(0, 9);
-        attrH = Random.Range(0, 9);
+        funds = UnityEngine.Random.Range(15, 50) * 10;
+        labor = UnityEngine.Random.Range(1, 5);
+        numofturn = UnityEngine.Random.Range(1, 3);
+        attrA = UnityEngine.Random.Range(0, 9);
+        attrB = UnityEngine.Random.Range(0, 9);
+        attrC = UnityEngine.Random.Range(0, 9);
+        attrD = UnityEngine.Random.Range(0, 9);
+        attrE = UnityEngine.Random.Range(0, 9);
+        attrF = UnityEngine.Random.Range(0, 9);
+        attrG = UnityEngine.Random.Range(0, 9);
+        attrH = UnityEngine.Random.Range(0, 9);
 
         basicInfo = "$ " + funds + '\n' + "Labor " + labor + '\n' + "NumofTurn " + numofturn + '\n';
         criteriaA = "Criteria A " + attrA + '\n';
@@ -50,10 +50,20 @@ public class NodeAttributes : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         UpdateDisplayInfo();
 
 	}
+
 	
     public void UpdateDisplayInfo()
     {
         basicInfo = "$ " + funds + '\n' + "Labor " + labor + '\n' + "NumofTurn " + numofturn + '\n';
+        criteriaA = "Criteria A " + attrA + '\n';
+        criteriaB = "Criteria B " + attrB + '\n';
+        criteriaC = "Criteria C " + attrC + '\n';
+        criteriaD = "Criteria D " + attrD + '\n';
+        criteriaE = "Criteria E " + attrE + '\n';
+        criteriaF = "Criteria F " + attrF + '\n';
+        criteriaG = "Criteria G " + attrG + '\n';
+        criteriaH = "Criteria H " + attrH + '\n';
+
 
         ManipulateString(attrIndex);
 
@@ -126,6 +136,7 @@ public class NodeAttributes : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     private void Update()
     {
         //Debug.Log("attrWeightedSum is " + attrWeightedSum);
+        UpdateDisplayInfo();
     }
 
     void OnGUI()
