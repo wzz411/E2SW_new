@@ -14,14 +14,38 @@ public class Controller : MonoBehaviour {
         coef_A, coef_A_time, coef_B, coef_B_time, coef_C, coef_C_time, coef_D, coef_D_time, coef_E, coef_E_time, coef_F, coef_F_time, coef_G, coef_G_time, coef_H, coef_H_time,
         coef_explore_labor, coef_explore_labor_time;
 
-    public float[] pos = new float[3];
-    public float funds, labor, numofturn, attrA, attrB, attrC, attrD, attrE, attrF, attrG, attrH;
-    public bool ifMiniGame, ifDrill_1, ifDrill_2;
-    public float[,] lr = new float[60, 3];
 
-    private GameObject initialNode;
+    public List<float> funds = new List<float>();
+    public List<float> labor = new List<float>();
+    public List<float> numofturn = new List<float>();
+    public List<float> attrA = new List<float>();
+    public List<float> attrB = new List<float>();
+    public List<float> attrC = new List<float>();
+    public List<float> attrD = new List<float>();
+    public List<float> attrE = new List<float>();
+    public List<float> attrF = new List<float>();
+    public List<float> attrG = new List<float>();
+    public List<float> attrH = new List<float>();
+    public List<bool> ifMiniGame = new List<bool>();
+    public List<bool> ifDrill_1 = new List<bool>();
+    public List<bool> ifDrill_2 = new List<bool>();
+    public List<string> allNodeNames = new List<string>();
+    public List<float[]> pos_list = new List<float[]>();
+    public List<float[]> scale_list = new List<float[]>();
+    public List<float[,]> lrCreate_list = new List<float[,]>();
+    public List<float[,]> lrBuy_list = new List<float[,]>();
+    public List<string> childNode = new List<string>();
+    public List<bool> buyBtn = new List<bool>();
 
-    private void Start()
+
+    // helper var
+    private float[,] lrBuy = new float[60, 3];
+    private float[,] lrCreate = new float[60, 3];
+    private GameObject[] node;
+    private GameObject nodePrefab;
+
+
+    private void Awake()
     {
         funds_main = GameObject.Find("fundsValue").GetComponent<Text>();
         labor_main = GameObject.Find("laborValue").GetComponent<Text>();
@@ -58,8 +82,9 @@ public class Controller : MonoBehaviour {
         coef_H_time = GameObject.Find("coef_H_time").GetComponent<Text>();
         coef_explore_labor = GameObject.Find("coef_exploreLabor").GetComponent<Text>();
         coef_explore_labor_time = GameObject.Find("coef_exploreLabor_time").GetComponent<Text>();
-
-        initialNode = GameObject.FindWithTag("Initial Node");
+        
+        nodePrefab = Resources.Load("Prefabs/NewNode", typeof(GameObject)) as GameObject;
+        
     }
 
     private void Update()
@@ -70,10 +95,11 @@ public class Controller : MonoBehaviour {
 
     public void Save()
     {
-        
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file_GameMain = File.Create(Application.persistentDataPath + "/GameMain.dat");
-            //Debug.Log(Application.persistentDataPath);
+        /***********************************************************************************
+        Debug.Log(Application.persistentDataPath);  <--- Use this method to check Save file's directory   
+        ************************************************************************************/
         // Save values in Game Main
         GameMain data_GameMain = new GameMain();
         data_GameMain.funds_main = funds_main.text;
@@ -116,48 +142,77 @@ public class Controller : MonoBehaviour {
         file_GameMain.Close();
 
 
-        // save node pos
+        // save node info
+        node = GameObject.FindGameObjectsWithTag("Node Name");
         BinaryFormatter bf2 = new BinaryFormatter();
         FileStream file_node = File.Create(Application.persistentDataPath + "/Node.dat");
         NodeData data_Node = new NodeData();
 
-        
-        data_Node.pos[0] = GameObject.FindWithTag("Initial Node").transform.position.x;
-        data_Node.pos[1] = GameObject.FindWithTag("Initial Node").transform.position.y;
-        data_Node.pos[2] = GameObject.FindWithTag("Initial Node").transform.position.z;
-
-        data_Node.funds = initialNode.transform.GetComponentInChildren<NodeAttributes>().funds;
-        data_Node.labor = initialNode.transform.GetComponentInChildren<NodeAttributes>().labor;
-        data_Node.numofturn = initialNode.transform.GetComponentInChildren<NodeAttributes>().numofturn;
-        data_Node.attrA = initialNode.transform.GetComponentInChildren<NodeAttributes>().attrA;
-        data_Node.attrB = initialNode.transform.GetComponentInChildren<NodeAttributes>().attrB;
-        data_Node.attrC = initialNode.transform.GetComponentInChildren<NodeAttributes>().attrC;
-        data_Node.attrD = initialNode.transform.GetComponentInChildren<NodeAttributes>().attrD;
-        data_Node.attrF = initialNode.transform.GetComponentInChildren<NodeAttributes>().attrE;
-        data_Node.attrG = initialNode.transform.GetComponentInChildren<NodeAttributes>().attrF;
-        data_Node.attrH = initialNode.transform.GetComponentInChildren<NodeAttributes>().attrG;
-        data_Node.ifMiniGame = initialNode.transform.GetComponentInChildren<NodeAttributes>().ifMiniGame;
-        data_Node.ifDrill_1 = initialNode.transform.GetComponentInChildren<NodeAttributes>().ifDrill_1;
-        data_Node.ifDrill_2 = initialNode.transform.GetComponentInChildren<NodeAttributes>().ifDrill_2;
-
-        for (int i = 0; i < 60; i++)
+        for (int k = 0; k < node.Length; k++)
         {
-            for (int j = 0; j < 3; j++)
-            {
-                data_Node.lr[i, 0] = initialNode.transform.FindChild("CreateButton").GetComponent<LineRenderer>().GetPosition(i).x;
-                data_Node.lr[i, 1] = initialNode.transform.FindChild("CreateButton").GetComponent<LineRenderer>().GetPosition(i).y;
-                data_Node.lr[i, 2] = initialNode.transform.FindChild("CreateButton").GetComponent<LineRenderer>().GetPosition(i).z;
+            // position info
+            float[] pos = new float[3] { node[k].transform.position.x, node[k].transform.position.y, node[k].transform.position.z };
+            data_Node.pos_list.Add(pos);
+
+            // scale info
+            float[] scale = new float[3] { node[k].transform.localScale.x, node[k].transform.localScale.y, node[k].transform.localScale.z };
+            data_Node.scale_list.Add(scale);
+
+            // attr info
+            data_Node.funds.Add(node[k].transform.GetComponentInChildren<NodeAttributes>().funds);
+            data_Node.labor.Add(node[k].transform.GetComponentInChildren<NodeAttributes>().labor);
+            data_Node.numofturn.Add(node[k].transform.GetComponentInChildren<NodeAttributes>().numofturn);
+            data_Node.attrA.Add(node[k].transform.GetComponentInChildren<NodeAttributes>().attrA);
+            data_Node.attrB.Add(node[k].transform.GetComponentInChildren<NodeAttributes>().attrB);
+            data_Node.attrC.Add(node[k].transform.GetComponentInChildren<NodeAttributes>().attrC);
+            data_Node.attrD.Add(node[k].transform.GetComponentInChildren<NodeAttributes>().attrD);
+            data_Node.attrE.Add(node[k].transform.GetComponentInChildren<NodeAttributes>().attrE);
+            data_Node.attrF.Add(node[k].transform.GetComponentInChildren<NodeAttributes>().attrF);
+            data_Node.attrG.Add(node[k].transform.GetComponentInChildren<NodeAttributes>().attrG);
+            data_Node.attrH.Add(node[k].transform.GetComponentInChildren<NodeAttributes>().attrH);
+            data_Node.ifMiniGame.Add(node[k].transform.GetComponentInChildren<NodeAttributes>().ifMiniGame);
+            data_Node.ifDrill_1.Add(node[k].transform.GetComponentInChildren<NodeAttributes>().ifDrill_1);
+            data_Node.ifDrill_2.Add(node[k].transform.GetComponentInChildren<NodeAttributes>().ifDrill_2);
+
+            // lr info
+            lrCreate = new float[60, 3];
+            for (int i = 0; i < 60; i++)
+            {    
+                lrCreate[i, 0] = node[k].transform.FindChild("CreateButton").GetComponent<LineRenderer>().GetPosition(i).x;
+                lrCreate[i, 1] = node[k].transform.FindChild("CreateButton").GetComponent<LineRenderer>().GetPosition(i).y;
+                lrCreate[i, 2] = node[k].transform.FindChild("CreateButton").GetComponent<LineRenderer>().GetPosition(i).z;
             }
+            data_Node.lrCreate_list.Add(lrCreate);
+
+            lrBuy = new float[60, 3];
+            for (int i = 0; i < 60; i++)
+            {
+                lrBuy[i, 0] = node[k].transform.FindChild("Canvas").FindChild("Button").GetComponent<LineRenderer>().GetPosition(i).x;
+                lrBuy[i, 1] = node[k].transform.FindChild("Canvas").FindChild("Button").GetComponent<LineRenderer>().GetPosition(i).y;
+                lrBuy[i, 2] = node[k].transform.FindChild("Canvas").FindChild("Button").GetComponent<LineRenderer>().GetPosition(i).z;
+            }
+            data_Node.lrBuy_list.Add(lrBuy);
+
+            // node's childNode list
+            data_Node.childNode.Add(StringList2String(node[k].transform.GetComponentInChildren<NodeAttributes>().childNode));
+            /***********************************************************
+             * method to check each node's child list
+            Debug.Log(node[k].name + " list of child: " + StringList2String(node[k].transform.GetComponentInChildren<NodeAttributes>().childNode));
+            ***********************************************************/
+
+
+            // whether the node has been purchased
+            data_Node.buyBtn.Add(node[k].transform.FindChild("Canvas").FindChild("Button").GetComponent<Button>().interactable);
         }
-        
+
+        // update total node list in GodMode
+        for (int i = 0; i < GodMode.all_nodes.Count; i++)
+        {
+            data_Node.allNodeNames.Add(GodMode.all_nodes[i]);
+        }
 
         bf2.Serialize(file_node, data_Node);
         file_node.Close();
-
-
-
-
-
     }
 
     public void Load()
@@ -168,7 +223,6 @@ public class Controller : MonoBehaviour {
             FileStream file = File.Open(Application.persistentDataPath + "/GameMain.dat", FileMode.Open);
             GameMain data_GameMain = (GameMain)bf.Deserialize(file);
             file.Close();
-
 
             // load values in Game Main
             funds_main.text = data_GameMain.funds_main;
@@ -207,8 +261,7 @@ public class Controller : MonoBehaviour {
             GodMode.coef_explore_labor = float.Parse(data_GameMain.coef_explore_labor);
             GodMode.coef_explore_labor_time = float.Parse(data_GameMain.coef_explore_labor_time);
 
-
-            
+   
         }
         if (File.Exists(Application.persistentDataPath + "/Node.dat"))
         {
@@ -217,57 +270,129 @@ public class Controller : MonoBehaviour {
             NodeData data_Node = (NodeData)bf.Deserialize(file);
             file.Close();
 
-            pos[0] = data_Node.pos[0];
-            pos[1] = data_Node.pos[1];
-            pos[2] = data_Node.pos[2];
-            /*
-            Debug.Log(pos[0]);
-            Debug.Log(pos[1]);
-            Debug.Log(pos[2]);
-            */
-            initialNode.transform.GetComponentInChildren<NodeAttributes>().funds = data_Node.funds;
-            initialNode.transform.GetComponentInChildren<NodeAttributes>().labor = data_Node.labor;
-            initialNode.transform.GetComponentInChildren<NodeAttributes>().numofturn = data_Node.numofturn;
-            initialNode.transform.GetComponentInChildren<NodeAttributes>().attrA = data_Node.attrA;
-            initialNode.transform.GetComponentInChildren<NodeAttributes>().attrB = data_Node.attrB;
-            initialNode.transform.GetComponentInChildren<NodeAttributes>().attrC = data_Node.attrC;
-            initialNode.transform.GetComponentInChildren<NodeAttributes>().attrD = data_Node.attrD;
-            initialNode.transform.GetComponentInChildren<NodeAttributes>().attrE = data_Node.attrE;
-            initialNode.transform.GetComponentInChildren<NodeAttributes>().attrF = data_Node.attrF;
-            initialNode.transform.GetComponentInChildren<NodeAttributes>().attrG = data_Node.attrG;
-            initialNode.transform.GetComponentInChildren<NodeAttributes>().attrH = data_Node.attrH;
-            initialNode.transform.GetComponentInChildren<NodeAttributes>().ifDrill_1 = data_Node.ifDrill_1;
-            initialNode.transform.GetComponentInChildren<NodeAttributes>().ifDrill_2 = data_Node.ifDrill_2;
-            initialNode.transform.GetComponentInChildren<NodeAttributes>().ifMiniGame = data_Node.ifMiniGame;
-
-            for (int i = 0; i < 60; i++)
+            // clear out current existing nodes
+            foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Node Name"))
             {
-                for (int j = 0; j < 3; j++)
+                Destroy(obj);
+            }
+
+            // instantiate all nodes and load their info
+            for (int k = 0; k < data_Node.allNodeNames.Count; k++)
+            {
+                // instantiate at stored pos
+                GameObject creatingNode = Instantiate(nodePrefab, new Vector3(data_Node.pos_list[k][0], data_Node.pos_list[k][1], data_Node.pos_list[k][2]), Quaternion.identity) as GameObject;
+
+                // scale up/down each node
+                creatingNode.transform.localScale = new Vector3(data_Node.scale_list[k][0], data_Node.scale_list[k][1], data_Node.scale_list[k][2]);
+
+                // load node name and set it in correct place
+                creatingNode.name = data_Node.allNodeNames[k].ToString();
+                Button btn = creatingNode.gameObject.GetComponentInChildren<Button>();
+                btn.GetComponentInChildren<Text>().text = creatingNode.name;
+                creatingNode.transform.SetParent(GameObject.FindGameObjectWithTag("Node Group").transform);
+
+                // load all attributes
+                creatingNode.transform.GetComponentInChildren<NodeAttributes>().funds = data_Node.funds[k];
+                creatingNode.transform.GetComponentInChildren<NodeAttributes>().labor = data_Node.labor[k];
+                creatingNode.transform.GetComponentInChildren<NodeAttributes>().numofturn = data_Node.numofturn[k];
+                creatingNode.transform.GetComponentInChildren<NodeAttributes>().attrA = data_Node.attrA[k];
+                creatingNode.transform.GetComponentInChildren<NodeAttributes>().attrB = data_Node.attrB[k];
+                creatingNode.transform.GetComponentInChildren<NodeAttributes>().attrC = data_Node.attrC[k];
+                creatingNode.transform.GetComponentInChildren<NodeAttributes>().attrD = data_Node.attrD[k];
+                creatingNode.transform.GetComponentInChildren<NodeAttributes>().attrE = data_Node.attrE[k];
+                creatingNode.transform.GetComponentInChildren<NodeAttributes>().attrF = data_Node.attrF[k];
+                creatingNode.transform.GetComponentInChildren<NodeAttributes>().attrG = data_Node.attrG[k];
+                creatingNode.transform.GetComponentInChildren<NodeAttributes>().attrH = data_Node.attrH[k];
+                creatingNode.transform.GetComponentInChildren<NodeAttributes>().ifDrill_1 = data_Node.ifDrill_1[k];
+                creatingNode.transform.GetComponentInChildren<NodeAttributes>().ifDrill_2 = data_Node.ifDrill_2[k];
+                creatingNode.transform.GetComponentInChildren<NodeAttributes>().ifMiniGame = data_Node.ifMiniGame[k];
+
+                // load all lr
+                for (int i = 0; i < 60; i++)
                 {
-                    initialNode.transform.FindChild("CreateButton").GetComponent<LineRenderer>().SetPosition(i, new Vector3(data_Node.lr[i,0], data_Node.lr[i, 1], data_Node.lr[i, 2]));
+                    creatingNode.transform.FindChild("CreateButton").GetComponent<LineRenderer>().SetPosition(i, new Vector3(data_Node.lrCreate_list[k][i, 0], data_Node.lrCreate_list[k][i, 1], data_Node.lrCreate_list[k][i, 2]));
                 }
+
+                for (int j = 0; j < 60; j++)
+                {
+                    creatingNode.transform.FindChild("Canvas").FindChild("Button").GetComponent<LineRenderer>().SetPosition(j, new Vector3(data_Node.lrBuy_list[k][j, 0], data_Node.lrBuy_list[k][j, 1], data_Node.lrBuy_list[k][j, 2]));
+                }
+
+                // load child node list
+                creatingNode.transform.GetComponentInChildren<NodeAttributes>().childNode.Clear();
+                string[] temp = data_Node.childNode[k].Split(',');
+                for (int j = 0; j < temp.Length; j++)
+                {
+                    creatingNode.transform.GetComponentInChildren<NodeAttributes>().childNode.Add(temp[j]);
+                }
+
+                // load whether the node has been purchased
+                creatingNode.transform.FindChild("Canvas").FindChild("Button").GetComponent<Button>().interactable = data_Node.buyBtn[k];
             }
         }
-    }
 
-    /*
-    public void Delete()
-    {
-        if (File.Exists(Application.persistentDataPath + "/gamedata.dat"))
+        // disable all edit/create button
+        GameObject[] createButton_lrs = GameObject.FindGameObjectsWithTag("Create Button");
+        foreach (GameObject createButton_lr in createButton_lrs)
         {
-            File.Delete(Application.persistentDataPath + "/gamedata.dat");
+            createButton_lr.transform.localScale = new Vector3(0f, 0f, 0f);
+        }
+        GameObject[] editButtons = GameObject.FindGameObjectsWithTag("Edit Button");
+        foreach (GameObject editButton in editButtons)
+        {
+            editButton.transform.localScale = new Vector3(0f, 0f, 0f);
         }
     }
-	*/
+
+
+
+    // helper method to convert List<string> to one string, separated by ','
+    private string StringList2String(List<string> input)
+    {
+        if (input.Count != 0)
+        {
+            string output = "";
+            for (int i = 0; i < input.Count - 1; i++)
+            {
+                output += input[i] + ",";
+            }
+            output += input[input.Count - 1];
+            return output;
+        }
+        else
+        {
+            return "";
+        }
+        
+    }
+
+
 }
 
 [Serializable]
 public class NodeData
 {
-    public float[] pos = new float[3];
-    public float funds, labor, numofturn, attrA, attrB, attrC, attrD, attrE, attrF, attrG, attrH;
-    public bool ifMiniGame, ifDrill_1, ifDrill_2;
-    public float[,] lr = new float[60,3];
+    public List<float> funds = new List<float>();
+    public List<float> labor = new List<float>();
+    public List<float> numofturn = new List<float>();
+    public List<float> attrA = new List<float>();
+    public List<float> attrB = new List<float>();
+    public List<float> attrC = new List<float>();
+    public List<float> attrD = new List<float>();
+    public List<float> attrE = new List<float>();
+    public List<float> attrF = new List<float>();
+    public List<float> attrG = new List<float>();
+    public List<float> attrH = new List<float>();
+    public List<bool> ifMiniGame = new List<bool>();
+    public List<bool> ifDrill_1 = new List<bool>();
+    public List<bool> ifDrill_2 = new List<bool>();
+    public List<string> allNodeNames = new List<string>();
+    public List<float[]> pos_list = new List<float[]>();
+    public List<float[]> scale_list = new List<float[]>();
+    public List<float[,]> lrCreate_list = new List<float[,]>();
+    public List<float[,]> lrBuy_list = new List<float[,]>();
+    public List<string> childNode = new List<string>();
+    public List<bool> buyBtn = new List<bool>();
 }
 
 
@@ -278,4 +403,5 @@ public class GameMain
         numofTPValue, costValue, overallPGValue, coef_fund, coef_fund_time, coef_labor, coef_labor_time, coef_test_cost, coef_test_cost_time,
         coef_A, coef_A_time, coef_B, coef_B_time, coef_C, coef_C_time, coef_D, coef_D_time, coef_E, coef_E_time, coef_F, coef_F_time, coef_G, coef_G_time, coef_H, coef_H_time,
         coef_explore_labor, coef_explore_labor_time;
+    
 }

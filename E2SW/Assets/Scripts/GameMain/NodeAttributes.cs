@@ -9,14 +9,12 @@ public class NodeAttributes : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 	public string[] attributes = new string[9];
     public static int attrIndex;
     public static bool colliding;
-    //public static string thisNodeName;
-    public static GameObject thisNode;
+    public static string thisNode;
 
     public GUISkin gameSkin;
     public float funds, labor, numofturn, attrA, attrB, attrC, attrD, attrE, attrF, attrG, attrH;
     public bool ifMiniGame, ifDrill_1, ifDrill_2;
-   //public List<string> childNodeNameString = new List<string>();
-    public List<GameObject> childNode = new List<GameObject>();
+    public List<string> childNode = new List<string>();
 
     public bool displayInfo = false;
     private string basicInfo, criteriaA, criteriaB, criteriaC, criteriaD, criteriaE, criteriaF, criteriaG, criteriaH;
@@ -135,7 +133,6 @@ public class NodeAttributes : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     private void Update()
     {
-        //Debug.Log("attrWeightedSum is " + attrWeightedSum);
         UpdateDisplayInfo();
     }
 
@@ -150,8 +147,7 @@ public class NodeAttributes : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 	{
 		displayInfo = true;
         colliding = true;
-        //thisNodeName = gameObject.transform.parent.name;
-        thisNode = transform.parent.gameObject;
+        thisNode = transform.parent.gameObject.name;
 
 	}
 

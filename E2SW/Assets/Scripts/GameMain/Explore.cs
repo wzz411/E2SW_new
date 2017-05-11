@@ -42,18 +42,22 @@ public class Explore : MonoBehaviour
         { // reveal max 5 nodes, if there are, ...
             RevealNode(transform.parent.GetComponent<NodeAttributes>().childNode.Count, 5);
         }
-        // transform.parent.GetComponent<NodeAttributes>().childNode
         laborInput.text = "";
 
         labor.text = (float.Parse(labor.text) - laborSpent).ToString();
 
+
+        /********************************************************************************************************************
+         *********************method to check node's child name**************************************************************
         Debug.Log("this node has " + transform.parent.GetComponent<NodeAttributes>().childNode.Count + " child nodes");
         for (int i = 0; i < transform.parent.GetComponent<NodeAttributes>().childNode.Count; i++)
         {
-            Debug.Log("childe " + transform.parent.GetComponent<NodeAttributes>().childNode[i].name + " has " + transform.parent.GetComponent<NodeAttributes>().childNode[i].GetComponentInChildren<NodeAttributes>().childNode.Count + " child nodes");
+            Debug.Log("childe " + transform.parent.GetComponent<NodeAttributes>().childNode[i] + " has " + GameObject.Find(transform.parent.GetComponent<NodeAttributes>().childNode[i]).GetComponentInChildren<NodeAttributes>().childNode.Count + " child nodes");
         }
+       *************************************************************************************************************************/
 
-        /*
+
+        /*************************************************************this method was gave up
         // copy components into new instantiated node GameObject
         GameObject hh = Instantiate(gameObject.transform.parent.parent.gameObject, new Vector3(-250, -90, 0), Quaternion.identity) as GameObject;
         // copy NodeAttributes
@@ -73,10 +77,7 @@ public class Explore : MonoBehaviour
             f.SetValue(new_component, f.GetValue(old_component));
         }
         // copy lr
-        */
-
-
-
+        *********************************************************************************/
     }
 
     private void RevealNode(int potentialNodes, int nodes2reveal)
@@ -92,18 +93,17 @@ public class Explore : MonoBehaviour
             }
             for (int i = 0; i < nodes2reveal; i++)
             {
-                Vector3 nodeMoveFwd = transform.parent.GetComponent<NodeAttributes>().childNode[nodeIndex[i]].transform.position;
+                Vector3 nodeMoveFwd = GameObject.Find(transform.parent.GetComponent<NodeAttributes>().childNode[nodeIndex[i]]).transform.position;
                 nodeMoveFwd.z = 250;
-                transform.parent.GetComponent<NodeAttributes>().childNode[nodeIndex[i]].transform.position = nodeMoveFwd;
-                //transform.parent.GetComponent<NodeAttributes>().childNode[nodeIndex[i]].transform.localScale = new Vector3(1f, 1f, 1f);
+                GameObject.Find(transform.parent.GetComponent<NodeAttributes>().childNode[nodeIndex[i]]).transform.position = nodeMoveFwd;
                 
-                if (transform.parent.GetComponent<NodeAttributes>().childNode[i].GetComponentInChildren<NodeAttributes>().childNode.Count > 2)
+                if (GameObject.Find(transform.parent.GetComponent<NodeAttributes>().childNode[i]).GetComponentInChildren<NodeAttributes>().childNode.Count > 2)
                 {
-                    transform.parent.GetComponent<NodeAttributes>().childNode[nodeIndex[i]].transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+                    GameObject.Find(transform.parent.GetComponent<NodeAttributes>().childNode[nodeIndex[i]]).transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
                 }
                 else
                 {
-                    transform.parent.GetComponent<NodeAttributes>().childNode[nodeIndex[i]].transform.localScale = new Vector3(1f, 1f, 1f);
+                    GameObject.Find(transform.parent.GetComponent<NodeAttributes>().childNode[nodeIndex[i]]).transform.localScale = new Vector3(1f, 1f, 1f);
                 }
 
                 // 2) move LineRenderer
@@ -111,7 +111,7 @@ public class Explore : MonoBehaviour
                 Vector3 temp = transform.parent.position;
                 temp.z = 250;
                 lr.SetPosition(bn.lrIndex, temp);
-                lr.SetPosition(bn.lrIndex + 1, transform.parent.GetComponent<NodeAttributes>().childNode[nodeIndex[i]].transform.position);
+                lr.SetPosition(bn.lrIndex + 1, GameObject.Find(transform.parent.GetComponent<NodeAttributes>().childNode[nodeIndex[i]]).transform.position);
                 bn.lrIndex += 2;
             }
         }
@@ -122,28 +122,31 @@ public class Explore : MonoBehaviour
         int nodeIndex = transform.parent.GetComponent<NodeAttributes>().childNode.Count;
         for (int i = 0; i < nodeIndex; i++)
         {
-            Vector3 nodeMoveFwd = transform.parent.GetComponent<NodeAttributes>().childNode[i].transform.position;
-            nodeMoveFwd.z = 250;
-            transform.parent.GetComponent<NodeAttributes>().childNode[i].transform.position = nodeMoveFwd;
-            //transform.parent.GetComponent<NodeAttributes>().childNode[i].transform.localScale = new Vector3(1f, 1f, 1f);
-
-            if (transform.parent.GetComponent<NodeAttributes>().childNode[i].GetComponentInChildren<NodeAttributes>().childNode.Count > 2)
+            if (GameObject.Find(transform.parent.GetComponent<NodeAttributes>().childNode[i]) != null)
             {
-                transform.parent.GetComponent<NodeAttributes>().childNode[i].transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
-            }
-            else
-            {
-                transform.parent.GetComponent<NodeAttributes>().childNode[i].transform.localScale = new Vector3(1f, 1f, 1f);
-            }
+                Vector3 nodeMoveFwd = GameObject.Find(transform.parent.GetComponent<NodeAttributes>().childNode[i]).transform.position;
+                nodeMoveFwd.z = 250;
+                GameObject.Find(transform.parent.GetComponent<NodeAttributes>().childNode[i]).transform.position = nodeMoveFwd;
 
-            // 2) move LineRenderer
-            lr.startWidth = 5f;
-            Vector3 temp = transform.parent.position;
-            temp.z = 250;
-            lr.SetPosition(bn.lrIndex, temp);
-            lr.SetPosition(bn.lrIndex + 1, transform.parent.GetComponent<NodeAttributes>().childNode[i].transform.position);
-            bn.lrIndex += 2;
-        }
+                if (GameObject.Find(transform.parent.GetComponent<NodeAttributes>().childNode[i]).GetComponentInChildren<NodeAttributes>().childNode.Count > 2)
+                {
+                    GameObject.Find(transform.parent.GetComponent<NodeAttributes>().childNode[i]).transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+                }
+                else
+                {
+                    GameObject.Find(transform.parent.GetComponent<NodeAttributes>().childNode[i]).transform.localScale = new Vector3(1f, 1f, 1f);
+                }
+
+                //2) move LineRenderer
+                lr.startWidth = 5f;
+                Vector3 temp = transform.parent.position;
+                temp.z = 250;
+                lr.SetPosition(bn.lrIndex, temp);
+                lr.SetPosition(bn.lrIndex + 1, GameObject.Find(transform.parent.GetComponent<NodeAttributes>().childNode[i]).transform.position);
+                bn.lrIndex += 2;
+            }
+            
+    }
     }
 
 }

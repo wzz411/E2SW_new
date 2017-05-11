@@ -20,17 +20,6 @@ public class BuyNode : MonoBehaviour
 
     void Start()
     {
-        //TODO: find a more efficient way to assign game objects
-
-        lr = GetComponent<LineRenderer>();
-        nodePos = transform.parent.position;
-        nodePos.z = 250;
-        for (int i = 0; i < 60; i++)
-        {
-            lr.SetPosition(i, nodePos);
-        }
-
-
         buyButton = GetComponent<Button>();
         buyButton.onClick.AddListener(TaskOnClick);
         funds = GameObject.Find("fundsValue").GetComponent<Text>();
@@ -46,8 +35,19 @@ public class BuyNode : MonoBehaviour
         criteriaF = GameObject.FindWithTag("EstCriteriaF").GetComponent<Text>();
         criteriaG = GameObject.FindWithTag("EstCriteriaG").GetComponent<Text>();
         criteriaH = GameObject.FindWithTag("EstCriteriaH").GetComponent<Text>();
+    }
 
-
+    //*********************************************************************************************
+    //*****************Awake is to prevent this script from overwriting lr coordinates when Loading
+    private void Awake()
+    {
+        lr = GetComponent<LineRenderer>();
+        nodePos = transform.parent.position;
+        nodePos.z = 250;
+        for (int i = 0; i < 60; i++)
+        {
+            lr.SetPosition(i, nodePos);
+        }
     }
 
     private void TaskOnClick()
@@ -124,18 +124,26 @@ public class BuyNode : MonoBehaviour
         if (transform.parent.GetComponent<NodeAttributes>().childNode.Count > 0)
         {
             int nodeIndex = UnityEngine.Random.Range(0, transform.parent.GetComponent<NodeAttributes>().childNode.Count);
-            Vector3 nodeMoveFwd = transform.parent.GetComponent<NodeAttributes>().childNode[nodeIndex].transform.position;
-            nodeMoveFwd.z = 250;
-            transform.parent.GetComponent<NodeAttributes>().childNode[nodeIndex].transform.position = nodeMoveFwd;
-            transform.parent.GetComponent<NodeAttributes>().childNode[nodeIndex].transform.localScale = new Vector3(1f, 1f, 1f);
+            if (GameObject.Find(transform.parent.GetComponent<NodeAttributes>().childNode[nodeIndex]) != null)
+            {
+                Vector3 nodeMoveFwd = GameObject.Find(transform.parent.GetComponent<NodeAttributes>().childNode[nodeIndex]).transform.position;
+                //Vector3 nodeMoveFwd = transform.parent.GetComponent<NodeAttributes>().childNode[nodeIndex].transform.position;
+                nodeMoveFwd.z = 250;
+                GameObject.Find(transform.parent.GetComponent<NodeAttributes>().childNode[nodeIndex]).transform.position = nodeMoveFwd;
+                //transform.parent.GetComponent<NodeAttributes>().childNode[nodeIndex].transform.position = nodeMoveFwd;
+                GameObject.Find(transform.parent.GetComponent<NodeAttributes>().childNode[nodeIndex]).transform.localScale = new Vector3(1f, 1f, 1f);
+                //transform.parent.GetComponent<NodeAttributes>().childNode[nodeIndex].transform.localScale = new Vector3(1f, 1f, 1f);
 
-            // 2) move LineRenderer
-            lr.startWidth = 5f;
-            Vector3 temp = transform.parent.position;
-            temp.z = 250;
-            lr.SetPosition(lrIndex, temp);
-            lr.SetPosition(lrIndex + 1, transform.parent.GetComponent<NodeAttributes>().childNode[nodeIndex].transform.position);
-            lrIndex += 2;
+                // 2) move LineRenderer
+                lr.startWidth = 5f;
+                Vector3 temp = transform.parent.position;
+                temp.z = 250;
+                lr.SetPosition(lrIndex, temp);
+                lr.SetPosition(lrIndex + 1, GameObject.Find(transform.parent.GetComponent<NodeAttributes>().childNode[nodeIndex]).transform.position);
+                //lr.SetPosition(lrIndex + 1, transform.parent.GetComponent<NodeAttributes>().childNode[nodeIndex].transform.position);
+                lrIndex += 2;
+            }
+            
             
         }
 

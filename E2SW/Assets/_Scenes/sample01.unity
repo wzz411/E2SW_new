@@ -5879,7 +5879,7 @@ GameObject:
   - component: {fileID: 841406315}
   m_Layer: 0
   m_Name: Node Group
-  m_TagString: Untagged
+  m_TagString: Node Group
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11331,7 +11331,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1426370929094994, guid: 77f55ca633bce96498878760a1e1dde1, type: 2}
       propertyPath: m_TagString
-      value: Initial Node
+      value: Node Name
       objectReference: {fileID: 0}
     - target: {fileID: 1426370929094994, guid: 77f55ca633bce96498878760a1e1dde1, type: 2}
       propertyPath: m_Name
@@ -16050,6 +16050,10 @@ MonoBehaviour:
   attrF: 0
   attrG: 0
   attrH: 0
+  ifMiniGame: 0
+  ifDrill_1: 0
+  ifDrill_2: 0
+  allNodeNames: []
 --- !u!4 &1943835535
 Transform:
   m_ObjectHideFlags: 0

@@ -28,7 +28,7 @@ public class GodMode : MonoBehaviour{
     public static float coef_criteriaG_time = 0f;
     public static float coef_criteriaH_time = 0f;
     public static float coef_explore_labor_time = 0f;
-    public static List<GameObject> all_nodes = new List<GameObject>();
+    public static List<string> all_nodes = new List<string>();
 
     public Text coef_funds_time_text, coef_labor_time_text, coef_test_cost_time_text, coef_criteriaA_time_text,
         coef_criteriaB_time_text, coef_criteriaC_time_text, coef_criteriaD_time_text, coef_criteriaE_time_text, coef_criteriaF_time_text,
@@ -63,9 +63,17 @@ public class GodMode : MonoBehaviour{
         coef_criteriaH_text = GameObject.Find("coef_H").GetComponent<Text>();
         coef_explore_labor_text = GameObject.Find("coef_exploreLabor").GetComponent<Text>();
 
-        all_nodes.Add(GameObject.FindGameObjectWithTag("Initial Node"));
+        if(all_nodes.Count == 0)
+        {
+            all_nodes.Add(GameObject.FindGameObjectWithTag("Node Name").name);
+        }
+        
     }
 
+    private void Awake()
+    {
+        
+    }
 
     private void Update()
     {
@@ -227,12 +235,13 @@ public class GodMode : MonoBehaviour{
         
         if (Input.GetKeyDown("space"))
         {
-            Debug.Log("all nodes list: ");
+            Debug.Log("all nodes (" + all_nodes.Count + ") list: ");
             for (int i = 0; i < GodMode.all_nodes.Count; i++)
             {
-                Debug.Log(GodMode.all_nodes[i].name);
+                Debug.Log(GodMode.all_nodes[i]);
             }
         }
+
 
     }
 

@@ -14,7 +14,8 @@ public class FinishEdit : MonoBehaviour
     public void Finish()
     {
         // move all node's children to background
-        
+        GameObject initialNode = GameObject.Find("node0");
+        Vector3 initialNodePos = initialNode.transform.position;
         GameObject[] nodes = GameObject.FindGameObjectsWithTag("Node Name");
         foreach (GameObject node in nodes)
         {
@@ -23,6 +24,9 @@ public class FinishEdit : MonoBehaviour
             node.transform.position = nodeMoveBwd;
             node.transform.localScale = new Vector3(0f, 0f, 0f);
         }
+        initialNode.transform.position = initialNodePos;
+        initialNode.transform.localScale = new Vector3(1f,1f,1f);
+        
 
 
         // move all nodes' line renderer components
