@@ -13,13 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneOSXIntel:4</UnityBuildTarget>
     <UnityVersion>5.5.1f1</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -103,20 +101,15 @@
     <Compile Include="Assets\Scripts\GameMain\EditModeConfirmButton.cs" />
     <Compile Include="Assets\Scripts\GameMain\EditModeConfirmButton_Main.cs" />
     <Compile Include="Assets\Scripts\GameMain\EditMode_Main.cs" />
+    <Compile Include="Assets\Scripts\GameMain\Events.cs" />
     <Compile Include="Assets\Scripts\GameMain\Explore.cs" />
     <Compile Include="Assets\Scripts\GameMain\FinishEdit.cs" />
-    <Compile Include="Assets\Scripts\GameMain\GenerateNewNode.cs" />
     <Compile Include="Assets\Scripts\GameMain\GodMode.cs" />
     <Compile Include="Assets\Scripts\GameMain\ManualTreeGenerator.cs" />
-    <Compile Include="Assets\Scripts\GameMain\NewBehaviourScript.cs" />
-    <Compile Include="Assets\Scripts\GameMain\NewNodeScript.cs" />
     <Compile Include="Assets\Scripts\GameMain\NodeAttributes.cs" />
-    <Compile Include="Assets\Scripts\GameMain\SaveGameManager.cs" />
-    <Compile Include="Assets\Scripts\GameMain\SaveableObject.cs" />
+    <Compile Include="Assets\Scripts\GameMain\SceneChangeScript.cs" />
     <Compile Include="Assets\Scripts\GameMain\SceneController.cs" />
-    <Compile Include="Assets\Scripts\GameMain\SpecificObject.cs" />
     <Compile Include="Assets\Scripts\GameMain\Testing.cs" />
-    <Compile Include="Assets\Scripts\GameMain\_DisplayInfo.cs" />
     <Compile Include="Assets\Scripts\GameMain\inputScript.cs" />
     <Compile Include="Assets\Scripts\GameMain\popUpWindow.cs" />
     <Compile Include="Assets\Scripts\GameMain\testInputScript.cs" />

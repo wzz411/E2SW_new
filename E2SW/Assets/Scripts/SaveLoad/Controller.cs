@@ -9,11 +9,13 @@ using UnityEngine.UI;
 public class Controller : MonoBehaviour {
     public static Controller control;
 
+    // declare any variables need to be saved. they should be the same as in [Serializable] at the bottom of this script
     public Text funds_main, labor_main, currentTurnValue, turnsRemainingValue,EPGValue_min, EPGValue_max, APG_currentTest_Value, numofPNValue,
         numofTPValue, costValue, overallPGValue, coef_fund, coef_fund_time, coef_labor, coef_labor_time, coef_test_cost, coef_test_cost_time,
         coef_A, coef_A_time, coef_B, coef_B_time, coef_C, coef_C_time, coef_D, coef_D_time, coef_E, coef_E_time, coef_F, coef_F_time, coef_G, coef_G_time, coef_H, coef_H_time,
-        coef_explore_labor, coef_explore_labor_time;
-
+        coef_explore_labor, coef_explore_labor_time, coef_fund_turn, coef_labor_turn, coef_test_cost_turn, coef_A_turn, coef_B_turn, coef_C_turn, coef_D_turn, coef_E_turn,
+        coef_F_turn, coef_G_turn, coef_H_turn, coef_explore_labor_turn, attrA_est, attrB_est, attrC_est, attrD_est, attrE_est, attrF_est, attrG_est, attrH_est,
+        attrA_tested, attrB_tested, attrC_tested, attrD_tested, attrE_tested, attrF_tested, attrG_tested, attrH_tested;
 
     public List<float> funds = new List<float>();
     public List<float> labor = new List<float>();
@@ -44,9 +46,9 @@ public class Controller : MonoBehaviour {
     private GameObject[] node;
     private GameObject nodePrefab;
 
-
     private void Awake()
     {
+        // intialize all text field 
         funds_main = GameObject.Find("fundsValue").GetComponent<Text>();
         labor_main = GameObject.Find("laborValue").GetComponent<Text>();
         currentTurnValue = GameObject.Find("currentTurnValue").GetComponent<Text>();
@@ -59,37 +61,64 @@ public class Controller : MonoBehaviour {
         costValue = GameObject.Find("CostValue").GetComponent<Text>();
         overallPGValue = GameObject.Find("overallPGValue").GetComponent<Text>();
         coef_fund = GameObject.Find("coef_fund").GetComponent<Text>();
-        coef_fund_time = GameObject.Find("coef_fund_time").GetComponent<Text>();
-        coef_labor = GameObject.Find("coef_fund").GetComponent<Text>();
-        coef_labor_time = GameObject.Find("coef_labor_time").GetComponent<Text>();
-        coef_test_cost = GameObject.Find("coef_testCost").GetComponent<Text>();
-        coef_test_cost_time = GameObject.Find("coef_testCost_time").GetComponent<Text>();
-        coef_A = GameObject.Find("coef_A").GetComponent<Text>();
-        coef_A_time = GameObject.Find("coef_A_time").GetComponent<Text>();
-        coef_B = GameObject.Find("coef_B").GetComponent<Text>();
-        coef_B_time = GameObject.Find("coef_B_time").GetComponent<Text>();
-        coef_C = GameObject.Find("coef_C").GetComponent<Text>();
-        coef_C_time = GameObject.Find("coef_C_time").GetComponent<Text>();
-        coef_D = GameObject.Find("coef_D").GetComponent<Text>();
-        coef_D_time = GameObject.Find("coef_D_time").GetComponent<Text>();
-        coef_E = GameObject.Find("coef_E").GetComponent<Text>();
-        coef_E_time = GameObject.Find("coef_E_time").GetComponent<Text>();
-        coef_F = GameObject.Find("coef_F").GetComponent<Text>();
-        coef_F_time = GameObject.Find("coef_F_time").GetComponent<Text>();
-        coef_G = GameObject.Find("coef_G").GetComponent<Text>();
-        coef_G_time = GameObject.Find("coef_G_time").GetComponent<Text>();
-        coef_H = GameObject.Find("coef_H").GetComponent<Text>();
-        coef_H_time = GameObject.Find("coef_H_time").GetComponent<Text>();
-        coef_explore_labor = GameObject.Find("coef_exploreLabor").GetComponent<Text>();
-        coef_explore_labor_time = GameObject.Find("coef_exploreLabor_time").GetComponent<Text>();
-        
-        nodePrefab = Resources.Load("Prefabs/NewNode", typeof(GameObject)) as GameObject;
-        
-    }
 
-    private void Update()
-    {
+        attrA_est = GameObject.Find("ValueCriteriaA").GetComponent<Text>();
+        attrB_est = GameObject.Find("ValueCriteriaB").GetComponent<Text>();
+        attrC_est = GameObject.Find("ValueCriteriaC").GetComponent<Text>();
+        attrD_est = GameObject.Find("ValueCriteriaD").GetComponent<Text>();
+        attrE_est = GameObject.Find("ValueCriteriaE").GetComponent<Text>();
+        attrF_est = GameObject.Find("ValueCriteriaF").GetComponent<Text>();
+        attrG_est = GameObject.Find("ValueCriteriaG").GetComponent<Text>();
+        attrH_est = GameObject.Find("ValueCriteriaH").GetComponent<Text>();
+
+        attrA_tested = GameObject.Find("TestedValueCriteriaA").GetComponent<Text>();
+        attrB_tested = GameObject.Find("TestedValueCriteriaB").GetComponent<Text>();
+        attrC_tested = GameObject.Find("TestedValueCriteriaC").GetComponent<Text>();
+        attrD_tested = GameObject.Find("TestedValueCriteriaD").GetComponent<Text>();
+        attrE_tested = GameObject.Find("TestedValueCriteriaE").GetComponent<Text>();
+        attrF_tested = GameObject.Find("TestedValueCriteriaF").GetComponent<Text>();
+        attrG_tested = GameObject.Find("TestedValueCriteriaG").GetComponent<Text>();
+        attrH_tested = GameObject.Find("TestedValueCriteriaH").GetComponent<Text>();
+
+        coef_fund_turn = GameObject.Find("coef_fund_turn").GetComponent<Text>();
+        coef_labor_turn = GameObject.Find("coef_labor_turn").GetComponent<Text>();
+        coef_test_cost_turn = GameObject.Find("coef_testCost_turn").GetComponent<Text>();
+        coef_A_turn = GameObject.Find("coef_A_turn").GetComponent<Text>();
+        coef_B_turn = GameObject.Find("coef_B_turn").GetComponent<Text>();
+        coef_C_turn = GameObject.Find("coef_C_turn").GetComponent<Text>();
+        coef_D_turn = GameObject.Find("coef_D_turn").GetComponent<Text>();
+        coef_E_turn = GameObject.Find("coef_E_turn").GetComponent<Text>();
+        coef_F_turn = GameObject.Find("coef_F_turn").GetComponent<Text>();
+        coef_G_turn = GameObject.Find("coef_G_turn").GetComponent<Text>();
+        coef_H_turn = GameObject.Find("coef_H_turn").GetComponent<Text>();
+        coef_explore_labor_turn = GameObject.Find("coef_exploreLabor_turn").GetComponent<Text>();
+
+        coef_labor = GameObject.Find("coef_fund").GetComponent<Text>();
+        coef_test_cost = GameObject.Find("coef_testCost").GetComponent<Text>();
+        coef_A = GameObject.Find("coef_A").GetComponent<Text>();
+        coef_B = GameObject.Find("coef_B").GetComponent<Text>();
+        coef_C = GameObject.Find("coef_C").GetComponent<Text>();
+        coef_D = GameObject.Find("coef_D").GetComponent<Text>();
+        coef_E = GameObject.Find("coef_E").GetComponent<Text>();
+        coef_F = GameObject.Find("coef_F").GetComponent<Text>();
+        coef_G = GameObject.Find("coef_G").GetComponent<Text>();
+        coef_H = GameObject.Find("coef_H").GetComponent<Text>();
+        coef_explore_labor = GameObject.Find("coef_exploreLabor").GetComponent<Text>();
         
+        coef_fund_time = GameObject.Find("coef_fund_time").GetComponent<Text>();
+        coef_labor_time = GameObject.Find("coef_labor_time").GetComponent<Text>();
+        coef_test_cost_time = GameObject.Find("coef_testCost_time").GetComponent<Text>();
+        coef_A_time = GameObject.Find("coef_A_time").GetComponent<Text>();
+        coef_B_time = GameObject.Find("coef_B_time").GetComponent<Text>();
+        coef_C_time = GameObject.Find("coef_C_time").GetComponent<Text>();
+        coef_D_time = GameObject.Find("coef_D_time").GetComponent<Text>();
+        coef_E_time = GameObject.Find("coef_E_time").GetComponent<Text>();
+        coef_F_time = GameObject.Find("coef_F_time").GetComponent<Text>();
+        coef_G_time = GameObject.Find("coef_G_time").GetComponent<Text>();
+        coef_H_time = GameObject.Find("coef_H_time").GetComponent<Text>();
+        coef_explore_labor_time = GameObject.Find("coef_exploreLabor_time").GetComponent<Text>();
+
+        nodePrefab = Resources.Load("Prefabs/NewNode", typeof(GameObject)) as GameObject;
     }
 
 
@@ -113,31 +142,68 @@ public class Controller : MonoBehaviour {
         data_GameMain.numofTPValue = numofTPValue.text;
         data_GameMain.costValue = costValue.text;
         data_GameMain.overallPGValue = overallPGValue.text;
+        // save attributes sum in Performance Criteria panel, est
+        data_GameMain.attrA_est = attrA_est.text;
+        data_GameMain.attrB_est = attrB_est.text;
+        data_GameMain.attrC_est = attrC_est.text;
+        data_GameMain.attrD_est = attrD_est.text;
+        data_GameMain.attrE_est = attrE_est.text;
+        data_GameMain.attrF_est = attrF_est.text;
+        data_GameMain.attrG_est = attrG_est.text;
+        data_GameMain.attrH_est = attrH_est.text;
+        // save attributes sum in Performance Criteria panel, tested
+        data_GameMain.attrA_tested = attrA_tested.text;
+        data_GameMain.attrB_tested = attrB_tested.text;
+        data_GameMain.attrC_tested = attrC_tested.text;
+        data_GameMain.attrD_tested = attrD_tested.text;
+        data_GameMain.attrE_tested = attrE_tested.text;
+        data_GameMain.attrF_tested = attrF_tested.text;
+        data_GameMain.attrG_tested = attrG_tested.text;
+        data_GameMain.attrH_tested = attrH_tested.text;
+        // save coefficients of all var, in GodMode panel
         data_GameMain.coef_fund = coef_fund.text;
-        data_GameMain.coef_fund_time = coef_fund_time.text;
         data_GameMain.coef_labor = coef_labor.text;
-        data_GameMain.coef_labor_time = coef_labor_time.text;
         data_GameMain.coef_test_cost = coef_test_cost.text;
-        data_GameMain.coef_test_cost_time = coef_test_cost_time.text;
         data_GameMain.coef_A = coef_A.text;
-        data_GameMain.coef_A_time = coef_A_time.text;
         data_GameMain.coef_B = coef_B.text;
-        data_GameMain.coef_B_time = coef_B_time.text;
         data_GameMain.coef_C = coef_C.text;
-        data_GameMain.coef_C_time = coef_C_time.text;
         data_GameMain.coef_D = coef_D.text;
-        data_GameMain.coef_D_time = coef_D_time.text;
         data_GameMain.coef_E = coef_E.text;
-        data_GameMain.coef_E_time = coef_E_time.text;
         data_GameMain.coef_F = coef_F.text;
-        data_GameMain.coef_F_time = coef_F_time.text;
         data_GameMain.coef_G = coef_G.text;
-        data_GameMain.coef_G_time = coef_G_time.text;
         data_GameMain.coef_H = coef_H.text;
-        data_GameMain.coef_H_time = coef_H_time.text;
         data_GameMain.coef_explore_labor = coef_explore_labor.text;
+        // save remaining turns of all var, in GodMode panel
+        data_GameMain.coef_fund_turn = coef_F_turn.text;
+        data_GameMain.coef_labor_turn = coef_labor_turn.text;
+        data_GameMain.coef_test_cost_turn = coef_test_cost_turn.text;
+        data_GameMain.coef_A_turn = coef_A_turn.text;
+        data_GameMain.coef_B_turn = coef_B_turn.text;
+        data_GameMain.coef_C_turn = coef_C_turn.text;
+        data_GameMain.coef_D_turn = coef_D_turn.text;
+        data_GameMain.coef_E_turn = coef_E_turn.text;
+        data_GameMain.coef_F_turn = coef_F_turn.text;
+        data_GameMain.coef_G_turn = coef_G_turn.text;
+        data_GameMain.coef_H_turn = coef_H_turn.text;
+        data_GameMain.coef_explore_labor_turn = coef_explore_labor_turn.text;
+        /*********************************************************************************************
+         *************save remaining time of all var, in GodMode panel********************************
+         ************this is unnecessary, since currently we are not using remaining time*************
+         *********************************************************************************************/
+        data_GameMain.coef_fund_time = coef_fund_time.text;
+        data_GameMain.coef_labor_time = coef_labor_time.text;
+        data_GameMain.coef_test_cost_time = coef_test_cost_time.text;
+        data_GameMain.coef_A_time = coef_A_time.text;
+        data_GameMain.coef_B_time = coef_B_time.text;
+        data_GameMain.coef_C_time = coef_C_time.text;
+        data_GameMain.coef_D_time = coef_D_time.text;
+        data_GameMain.coef_E_time = coef_E_time.text;
+        data_GameMain.coef_F_time = coef_F_time.text;
+        data_GameMain.coef_G_time = coef_G_time.text;
+        data_GameMain.coef_H_time = coef_H_time.text;
         data_GameMain.coef_explore_labor_time = coef_explore_labor_time.text;
 
+        // ending statement for binary formatter
         bf.Serialize(file_GameMain, data_GameMain);
         file_GameMain.Close();
 
@@ -195,10 +261,10 @@ public class Controller : MonoBehaviour {
 
             // node's childNode list
             data_Node.childNode.Add(StringList2String(node[k].transform.GetComponentInChildren<NodeAttributes>().childNode));
-            /***********************************************************
-             * method to check each node's child list
-            Debug.Log(node[k].name + " list of child: " + StringList2String(node[k].transform.GetComponentInChildren<NodeAttributes>().childNode));
-            ***********************************************************/
+            /**********************************************************************************************************************************************************
+             *********************************************method to check each node's child list***********************************************************************
+             *********Debug.Log(node[k].name + " list of child: " + StringList2String(node[k].transform.GetComponentInChildren<NodeAttributes>().childNode));**********
+             **********************************************************************************************************************************************************/
 
 
             // whether the node has been purchased
@@ -217,6 +283,7 @@ public class Controller : MonoBehaviour {
 
     public void Load()
     {
+        // load data from GameMain.dat
         if(File.Exists(Application.persistentDataPath + "/GameMain.dat"))
         {
             BinaryFormatter bf = new BinaryFormatter();
@@ -236,33 +303,69 @@ public class Controller : MonoBehaviour {
             numofTPValue.text = data_GameMain.numofTPValue;
             costValue.text = data_GameMain.costValue;
             overallPGValue.text = data_GameMain.overallPGValue;
-            GodMode.coef_funds_time = float.Parse(data_GameMain.coef_fund_time);
+            // load attribute sum in Performance Criteria Panel
+            attrA_est.text = data_GameMain.attrA_est;
+            attrB_est.text = data_GameMain.attrB_est;
+            attrC_est.text = data_GameMain.attrC_est;
+            attrE_est.text = data_GameMain.attrD_est;
+            attrF_est.text = data_GameMain.attrE_est;
+            attrG_est.text = data_GameMain.attrF_est;
+            attrG_est.text = data_GameMain.attrG_est;
+            attrH_est.text = data_GameMain.attrH_est;
+            // load attributes sum in Performance Criteria Panel
+            attrA_tested.text = data_GameMain.attrA_tested;
+            attrB_tested.text = data_GameMain.attrB_tested;
+            attrC_tested.text = data_GameMain.attrC_tested;
+            attrD_tested.text = data_GameMain.attrD_tested;
+            attrE_tested.text = data_GameMain.attrE_tested;
+            attrF_tested.text = data_GameMain.attrF_tested;
+            attrG_tested.text = data_GameMain.attrG_tested;
+            attrH_tested.text = data_GameMain.attrH_tested;
+            // load remaining turns of all var into GodMode
+            GodMode.coef_funds_turn = int.Parse(data_GameMain.coef_fund_turn);
+            GodMode.coef_labor_turn = int.Parse(data_GameMain.coef_labor_turn);
+            GodMode.coef_explore_labor_turn = int.Parse(data_GameMain.coef_explore_labor_turn);
+            GodMode.coef_test_cost_turn = int.Parse(data_GameMain.coef_test_cost_turn);
+            GodMode.coef_criteriaA_turn = int.Parse(data_GameMain.coef_A_turn);
+            GodMode.coef_criteriaB_turn = int.Parse(data_GameMain.coef_B_turn);
+            GodMode.coef_criteriaC_turn = int.Parse(data_GameMain.coef_C_turn);
+            GodMode.coef_criteriaD_turn = int.Parse(data_GameMain.coef_D_turn);
+            GodMode.coef_criteriaE_turn = int.Parse(data_GameMain.coef_E_turn);
+            GodMode.coef_criteriaF_turn = int.Parse(data_GameMain.coef_F_turn);
+            GodMode.coef_criteriaG_turn = int.Parse(data_GameMain.coef_G_turn);
+            GodMode.coef_criteriaH_turn = int.Parse(data_GameMain.coef_H_turn);
+            // load all coefficients of all var into GodMode
             GodMode.coef_funds = float.Parse(data_GameMain.coef_fund);
             GodMode.coef_labor = float.Parse(data_GameMain.coef_labor);
-            GodMode.coef_labor_time = float.Parse(data_GameMain.coef_labor_time);
             GodMode.coef_testCost = float.Parse(data_GameMain.coef_test_cost);
-            GodMode.coef_test_cost_time = float.Parse(data_GameMain.coef_test_cost_time);
             GodMode.coef_criteriaA = float.Parse(data_GameMain.coef_A);
-            GodMode.coef_criteriaA_time = float.Parse(data_GameMain.coef_A_time);
             GodMode.coef_criteriaB = float.Parse(data_GameMain.coef_B);
-            GodMode.coef_criteriaB_time = float.Parse(data_GameMain.coef_B_time);
             GodMode.coef_criteriaC = float.Parse(data_GameMain.coef_C);
-            GodMode.coef_criteriaC_time = float.Parse(data_GameMain.coef_C_time);
             GodMode.coef_criteriaD = float.Parse(data_GameMain.coef_D);
-            GodMode.coef_criteriaD_time = float.Parse(data_GameMain.coef_D_time);
             GodMode.coef_criteriaE = float.Parse(data_GameMain.coef_E);
-            GodMode.coef_criteriaE_time = float.Parse(data_GameMain.coef_E_time);
             GodMode.coef_criteriaF = float.Parse(data_GameMain.coef_F);
-            GodMode.coef_criteriaF_time = float.Parse(data_GameMain.coef_F_time);
             GodMode.coef_criteriaG = float.Parse(data_GameMain.coef_G);
-            GodMode.coef_criteriaG_time = float.Parse(data_GameMain.coef_G_time);
             GodMode.coef_criteriaH = float.Parse(data_GameMain.coef_H);
-            GodMode.coef_criteriaH_time = float.Parse(data_GameMain.coef_H_time);
             GodMode.coef_explore_labor = float.Parse(data_GameMain.coef_explore_labor);
+            /************************************************************************************************
+             *************loading remaining time of all var, in GodMode panel********************************
+             ************this is unnecessary, since currently we are not using remaining time****************
+             ************************************************************************************************/
+            GodMode.coef_funds_time = float.Parse(data_GameMain.coef_fund_time);
+            GodMode.coef_labor_time = float.Parse(data_GameMain.coef_labor_time);
+            GodMode.coef_test_cost_time = float.Parse(data_GameMain.coef_test_cost_time);
+            GodMode.coef_criteriaA_time = float.Parse(data_GameMain.coef_A_time);
+            GodMode.coef_criteriaB_time = float.Parse(data_GameMain.coef_B_time);
+            GodMode.coef_criteriaC_time = float.Parse(data_GameMain.coef_C_time);
+            GodMode.coef_criteriaD_time = float.Parse(data_GameMain.coef_D_time);
+            GodMode.coef_criteriaE_time = float.Parse(data_GameMain.coef_E_time);
+            GodMode.coef_criteriaF_time = float.Parse(data_GameMain.coef_F_time);
+            GodMode.coef_criteriaG_time = float.Parse(data_GameMain.coef_G_time);
+            GodMode.coef_criteriaH_time = float.Parse(data_GameMain.coef_H_time);
             GodMode.coef_explore_labor_time = float.Parse(data_GameMain.coef_explore_labor_time);
-
-   
         }
+
+        // load data from Node.dat
         if (File.Exists(Application.persistentDataPath + "/Node.dat"))
         {
             BinaryFormatter bf = new BinaryFormatter();
@@ -363,13 +466,19 @@ public class Controller : MonoBehaviour {
         {
             return "";
         }
-        
     }
 
 
 }
 
+
+
+/******************************************************Be aware:*****************************************************************************
+ ****add all variables those need to be saved in the following [Serializable] Field, as well as declare them on the top of this script*******
+ ********************************************************************************************************************************************/
 [Serializable]
+
+// data from NodeAttribute class, that needs to be saved
 public class NodeData
 {
     public List<float> funds = new List<float>();
@@ -397,11 +506,14 @@ public class NodeData
 
 
 [Serializable]
+// data from main game scene that needs be saved
 public class GameMain
 {
     public string funds_main, labor_main, currentTurnValue, turnsRemainingValue, EPGValue_min, EPGValue_max, APG_currentTest_Value, numofPNValue,
         numofTPValue, costValue, overallPGValue, coef_fund, coef_fund_time, coef_labor, coef_labor_time, coef_test_cost, coef_test_cost_time,
         coef_A, coef_A_time, coef_B, coef_B_time, coef_C, coef_C_time, coef_D, coef_D_time, coef_E, coef_E_time, coef_F, coef_F_time, coef_G, coef_G_time, coef_H, coef_H_time,
-        coef_explore_labor, coef_explore_labor_time;
+        coef_explore_labor, coef_explore_labor_time, coef_fund_turn, coef_labor_turn, coef_test_cost_turn, coef_A_turn, coef_B_turn, coef_C_turn, coef_D_turn, coef_E_turn,
+        coef_F_turn, coef_G_turn, coef_H_turn, coef_explore_labor_turn, attrA_est, attrB_est, attrC_est, attrD_est, attrE_est, attrF_est, attrG_est, attrH_est,
+        attrA_tested, attrB_tested, attrC_tested, attrD_tested, attrE_tested, attrF_tested, attrG_tested, attrH_tested;
     
 }

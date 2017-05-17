@@ -28,6 +28,7 @@ TagManager:
   - Main Game Scene
   - Initial Node
   - Node Group
+  - EventChoice
   layers:
   - Default
   - TransparentFX

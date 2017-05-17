@@ -166,6 +166,7 @@ public class NodeAttributes : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 	}
 
 
+    // helper method, change string array to one single string
 	private string Array2String(string[] input){
 		string result = "";
 		for (int i = 0; i < 9; i++) {

@@ -278,7 +278,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 250201402}
+      - m_Target: {fileID: 0}
         m_MethodName: ChangingScene
         m_Mode: 5
         m_Arguments:
@@ -336,7 +336,6 @@ GameObject:
   - component: {fileID: 250201399}
   - component: {fileID: 250201398}
   - component: {fileID: 250201397}
-  - component: {fileID: 250201402}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -412,17 +411,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &250201402
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 250201396}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6fb6319b7949a5644b2598d4a54d4b86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &545729345
 GameObject:
   m_ObjectHideFlags: 0
@@ -508,6 +496,7 @@ GameObject:
   - component: {fileID: 709936405}
   - component: {fileID: 709936404}
   - component: {fileID: 709936403}
+  - component: {fileID: 709936406}
   m_Layer: 5
   m_Name: rulesButton
   m_TagString: Untagged
@@ -573,8 +562,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 250201402}
-        m_MethodName: ChangingScene
+      - m_Target: {fileID: 709936406}
+        m_MethodName: ChangeScene
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -619,6 +608,17 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 709936401}
+--- !u!114 &709936406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 709936401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e36288cf37b58b94ab505c92be9e6641, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &711380856
 GameObject:
   m_ObjectHideFlags: 0
@@ -881,8 +881,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 250201402}
-        m_MethodName: ChangingScene
+      - m_Target: {fileID: 1015430827}
+        m_MethodName: ChangeScene
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -935,7 +935,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1015430822}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6fb6319b7949a5644b2598d4a54d4b86, type: 3}
+  m_Script: {fileID: 11500000, guid: e36288cf37b58b94ab505c92be9e6641, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1060936130

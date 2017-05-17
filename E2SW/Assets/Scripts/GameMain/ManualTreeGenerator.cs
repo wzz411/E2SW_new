@@ -25,8 +25,9 @@ public class ManualTreeGenerator : MonoBehaviour {
     }
 
 
-    //*********************************************************************************************
-    //*****************Awake is to prevent this script from overwriting lr coordinates when Loading
+    /******************************************************************************************************************
+     *****************Awake is to prevent this script from overwriting lr coordinates when Loading*********************
+     ******************************************************************************************************************/
     private void Awake()
     {
         // initiate all line points 
@@ -40,10 +41,6 @@ public class ManualTreeGenerator : MonoBehaviour {
     }
 
 
-    private void Update()
-    {
-
-    }
 
 
     // if create button is clicked
@@ -78,10 +75,11 @@ public class ManualTreeGenerator : MonoBehaviour {
                     Button btn = newNode.gameObject.GetComponentInChildren<Button>();
                     btn.GetComponentInChildren<Text>().text = newNode.name;
                     // assign new node to its parent
-                    //newNode.transform.SetParent(transform.parent.Find("ChildrenNode"));
                     newNode.transform.SetParent(transform.root.Find("Node Group"));
-                    /****************************************************************************     
-                     *     // method 1 : use string list to store all children node
+
+                    /**********************************************************************************************************************************     
+                     *************************************************Obselete method******************************************************************
+                     *   // method 1 : use string list to store all children node
                          gameObject.transform.parent.GetComponentInChildren<NodeAttributes>().childNodeNameString.Add(newNode.name);
                          Debug.Log(gameObject.transform.parent.name + " has ");
                          foreach (string aString in gameObject.transform.parent.GetComponentInChildren<NodeAttributes>().childNodeNameString)
@@ -89,9 +87,10 @@ public class ManualTreeGenerator : MonoBehaviour {
 
                              Debug.Log(aString);
                          }
-                    ****************************************************************************/
-                    // moethod 2: use GameObject to store all children node
-                    gameObject.transform.parent.GetComponentInChildren<NodeAttributes>().childNode.Add(newNode.name);
+                    **********************************************************************************************************************************/
+
+    // moethod 2: use GameObject to store all children node
+    gameObject.transform.parent.GetComponentInChildren<NodeAttributes>().childNode.Add(newNode.name);
                     count++;
                     GodMode.all_nodes.Add(newNode.name);
                 }

@@ -340,6 +340,7 @@ GameObject:
   - component: {fileID: 837953265}
   - component: {fileID: 837953264}
   - component: {fileID: 837953263}
+  - component: {fileID: 837953266}
   m_Layer: 0
   m_Name: goBackButton
   m_TagString: Untagged
@@ -405,8 +406,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 915305280}
-        m_MethodName: ChangingScene
+      - m_Target: {fileID: 837953266}
+        m_MethodName: ChangeScene
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -451,6 +452,17 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 837953261}
+--- !u!114 &837953266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 837953261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e36288cf37b58b94ab505c92be9e6641, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &915305274
 GameObject:
   m_ObjectHideFlags: 0
@@ -463,7 +475,6 @@ GameObject:
   - component: {fileID: 915305277}
   - component: {fileID: 915305276}
   - component: {fileID: 915305275}
-  - component: {fileID: 915305280}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -540,17 +551,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &915305280
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 915305274}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6fb6319b7949a5644b2598d4a54d4b86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1102067927
 GameObject:
   m_ObjectHideFlags: 0

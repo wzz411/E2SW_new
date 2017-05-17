@@ -64,6 +64,7 @@ public class FinishEdit : MonoBehaviour
 
     public void Edit()
     {
+        // move all nodes to the front, appearing the game scene, and setting their scale to be 1
         GameObject[] nodes = GameObject.FindGameObjectsWithTag("Node Name");
         foreach (GameObject node in nodes)
         {
@@ -72,6 +73,8 @@ public class FinishEdit : MonoBehaviour
             node.transform.position = nodeMoveBwd;
             node.transform.localScale = new Vector3(1f, 1f, 1f);
         }
+
+        // bring back all create buttons
         GameObject[] createButton_lrs = GameObject.FindGameObjectsWithTag("Create Button");
         foreach (GameObject createButton_lr in createButton_lrs)
         {
@@ -85,11 +88,14 @@ public class FinishEdit : MonoBehaviour
             createButton_lr.GetComponent<LineRenderer>().startWidth = 5f;
         }
 
+        // bring back all edit buttons
         GameObject[] editButtons = GameObject.FindGameObjectsWithTag("Edit Button");
         foreach (GameObject editButton in editButtons)
         {
             editButton.transform.localScale = new Vector3(1f, 1f, 1f);
         }
+
+        // make all Buy Button interactable again
         GameObject[] buyBtns = GameObject.FindGameObjectsWithTag("Buy Node");
         foreach (GameObject buyBtn in buyBtns)
         {
