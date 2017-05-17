@@ -107,11 +107,13 @@ public class Events : MonoBehaviour {
             // the following are changes in coefficients
             case 11:
                 GodMode.coef_funds = funds_coef;
+                GodMode.coef_funds_turn = funds_t;
                 funds_coef_text.text = funds_coef.ToString();
                 funds_turn_text.text = funds_t.ToString();
                 break;
             case 12:
                 GodMode.coef_labor = labor_coef;
+                GodMode.coef_labor_turn = labor_t;
                 labor_coef_text.text = labor_coef.ToString();
                 labor_turn_text.text = labor_t.ToString();
                 break;
